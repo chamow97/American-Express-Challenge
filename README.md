@@ -41,7 +41,7 @@
 	<li>Mobile and Desktop Friendly.<br> <img src="Screenshots/8.png"><br><img src="Screenshots/1.png"><br></li><br>
 	<li>Cleaner representation using Bootstrap Modal.<br><br><img src="Screenshots/3.png"></li><br><br>
 	<li>Table view for an overview of data. <br><br><img src="Screenshots/2.png"><br><br></li>
-	<li>Search by ID which gives detailed information if present and gives a notification if not present.<br><br> <img src="../Screenshots/5.png"><br><br><img src="Screenshots/7.png"><br></li>
+	<li>Search by ID which gives detailed information if present and gives a notification if not present.<br><br> <img src="Screenshots/5.png"><br><br><img src="Screenshots/7.png"><br></li>
 
 </ol>
 <br><br>
