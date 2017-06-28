@@ -45,8 +45,6 @@
 
 </ol>
 <br><br>
-<p><strong>Thank you for giving me this wonderful opportunity. Any queries? Drop a mail here: chamow97@hotmail.com </strong>
-
-You can also check out my readme.txt file.</p>
+<p><strong>Thank you for giving me this wonderful opportunity. Any queries? Drop a mail here: chamow97@hotmail.com </strong></p>
 </body>
-</html># American-Express-Challenge
+</html>
