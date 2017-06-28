@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1 col-md-3 col-lg-4 col-xs-1">
+
+        </div>
+        <div class="col-sm-10 col-md-6 col-lg-4 col-xs-10">
+            <h1 class="name">American Express</h1>
+        </div>
+        <div class="col-sm-1 col-md-3 col-lg-4 col-xs-1">
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-sm-2 col-xs-2 col-md-4 col-lg-4"></div>
+        <div class="col-sm-8 col-xs-8 col-md-4 col-lg-4">
+            <div class="info">User Information</div>
+        </div>
+        <div class="col-sm-2 col-xs-2 col-md-4 col-lg-4"></div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-sm-2 col-xs-2 col-md-4 col-lg-4"></div>
+        <div class="col-sm-8 col-xs-8 col-md-3 col-lg-3">
+            <div class="input-group">
+                <input type="text" id="searching" class="search-bar form-control" placeholder="Search by ID">
+                <span class="search-data input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-2 col-md-5 col-lg-5">
+        </div>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col-sm-1 col-xs-1 col-md-2 col-lg-2"></div>
+        <div class="col-sm-10 col-xs-10 col-md-8 col-lg-8">
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>More Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in credit %}
+            <tr class="details">
+           <td>{{ item.user_id }}</td>
+            <td style="margin-left: 10px">{{ item.name }}</td>
+                <td><button data-toggle="modal" data-target="#myModal" class="btn btn-success btn-sm" id="{{ item.user_id }}" type="button">Click here!</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+        <div class="col-sm-1 col-xs-1 col-md-2 col-lg-2"></div>
+    </div>
+</div>
+    <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detailed Information</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tbody class="detailed-content">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script>
+    $('.search-data').click(function () {
+           var inputVal = document.getElementById("searching").value;
+           var found = false;
+            {% for item in credit %}
+                if(inputVal == {{ item.user_id }}){
+                    toastr.success("User Found!");
+                    found = true;
+                    $('.search-data').attr('data-toggle',"modal");
+                    $('.search-data').attr("data-target", "#myModal");
+                    this.id = {{ item.user_id }};
+
+                }
+            {% endfor %}
+        if(found == false){
+            toastr.warning("User not found!");
+            $('.search-data').removeAttr('data-toggle');
+            $('.search-data').removeAttr("data-target");
+        }
+        });
+        $(".btn, .search-data").click(function () {
+            {% for item in credit %}
+                if({{ item.user_id }} == this.id){
+                    var modalContent = "<tr><td class='table-header'>ID:  </td><td style='padding-left: 10%;'>{{ item.user_id }} </td> </tr><br><hr>";
+                    modalContent += "<tr><td class='table-header'>Name:  </td><td style='padding-left: 10%;'>{{ item.name }} </td> </tr><br><hr>";
+                    modalContent += "<tr><td class='table-header'>Credit Amount:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.limit_bal }} </td> </tr><br><hr>";
+                    modalContent += "<tr><td class='table-header'>Name</td><td style='padding-left: 10%;'>";
+                    if({{ item.sex }} == 1){
+                        modalContent += "Male";
+                     }
+                    else{
+                        modalContent += "Female";
+                    }
+                    modalContent += "</td></tr><hr>";
+                    modalContent +=  "<tr><td class='table-header'>Education</td><td style='padding-left: 10%;'>";
+                    if({{ item.education }} == 1){
+                        modalContent += "Graduate School";
+                    }
+                    else if({{ item.education }} == 2){
+                        modalContent += "University";
+                    }
+                    else if({{ item.education }} == 3){
+                        modalContent += "High School";
+                    }
+                    else if({{ item.education }} == 4){
+                        modalContent += "Others";
+                    }
+                    else{
+                        modalContent += "Unknown";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Age:  </td><td style='padding-left: 10%;'>{{ item.age }} </td> </tr><tr></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status Sept 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_0 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_0 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_0 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status Aug 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_2 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_2 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_2 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status July 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_3 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_3 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_3 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status June 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_4 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_4 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_4 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status May 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_5 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_5 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_5 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Repayment Status July 2005:  </td><td style='padding-left: 10%;'>";
+                    if({{ item.pay_6 }} == -1){
+                        modalContent += "Payment duly";
+                    }
+                    else if({{ item.pay_6 }} == 9){
+                        modalContent += "Payment Delay - 9 months and above";
+                    }
+                    else{
+                        modalContent += "Payment Delay - ";
+                        modalContent += {{ item.pay_6 }};
+                        modalContent += " month(s).";
+                    }
+                    modalContent += "</td></tr>";
+                    modalContent += "<tr><td class='table-header'>Sept 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_1 }} </td> </tr><br>";
+                    modalContent += "<tr><td class='table-header'>Aug 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_2 }} </td> </tr><br>";
+                    modalContent += "<tr><td class='table-header'>July 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_3 }} </td> </tr><br>";
+                    modalContent += "<tr><td class='table-header'>June 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_4 }} </td> </tr><br>";
+                    modalContent += "<tr><td class='table-header'>May 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_5 }} </td> </tr><br>";
+                    modalContent += "<tr><td class='table-header'>April 2005 Previous Payment:  </td><td style='padding-left: 10%;'><span class='glyphicon glyphicon-usd'> </span>{{ item.bill_amt_6 }} </td> </tr><br>";
+
+                    }
+
+            {% endfor %}
+        $(".modal-body").html(modalContent);
+        });
+    </script>
+{% endblock %}

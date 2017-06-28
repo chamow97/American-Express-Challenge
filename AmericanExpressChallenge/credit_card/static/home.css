@@ -1,0 +1,38 @@
+body{
+    background-color: #6aa09a;
+}
+.name, .info{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: white;
+}
+.name{
+    text-shadow: 3px 0 0 #000000;
+}
+.info{
+    font-size: 20px;
+    margin-left: 20%;
+}
+
+.details{
+    font-family: 'Roboto', sans-serif;
+    color: whitesmoke;
+    font-weight: bolder;
+}
+.modal-body{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+
+}
+.table-header{
+    font-weight: bolder;
+}
+.modal-title{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.detailed-content td{
+    margin: 10% 10% 10% 10%;
+}
+.ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
