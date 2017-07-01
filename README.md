@@ -2,7 +2,7 @@
 <html>
 <body>
 	<h1 style="margin-left: auto; margin-right: auto; text-align: center;"><strong>American Express Challenge</strong></h1>
-	<br><br><br>
+	<p>It is the code I submitted for the American Express Internship Challenge 2017</p>
 	<h3><strong>Overview: </strong></h3>
 	<p>This Web App displays credit card statements for the past six months.</p>
 	<br>
